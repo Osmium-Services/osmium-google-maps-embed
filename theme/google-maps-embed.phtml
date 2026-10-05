@@ -1,13 +1,13 @@
 <?php // Rendered in place by a theme calling $template['serviceBlock']('map')
 // (the in-place counterpart to ServiceThemeBlocks::render('head', ...)).
-// Expects $site and $googleMaps (this service's config, injected by the
+// Expects $site and $googleMapsEmbed (this service's config, injected by the
 // loader). Renders nothing until a valid Google embed URL is saved.
 //
-// $googleMaps is read from the injected context rather than via
-// GoogleMapsConfig::get(), so a class that can't be autoloaded can't fatal
-// the page. The URL check mirrors GoogleMapsConfig::isValidEmbedUrl(). ?>
+// $googleMapsEmbed is read from the injected context rather than via
+// GoogleMapsEmbedConfig::get(), so a class that can't be autoloaded can't fatal
+// the page. The URL check mirrors GoogleMapsEmbedConfig::isValidEmbedUrl(). ?>
 <?php
-$embedUrl = (string) ($googleMaps['embedUrl'] ?? '');
+$embedUrl = (string) ($googleMapsEmbed['embedUrl'] ?? '');
 $urlValid = \preg_match(pattern: '#^https://www\.google\.com/maps/embed[/?]#', subject: $embedUrl) === 1;
 $siteName = (string) ($site['name'] ?? '');
 ?>

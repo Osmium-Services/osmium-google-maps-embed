@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Osmium\Services\GoogleMaps\Controllers;
+namespace Osmium\Services\GoogleMapsEmbed\Controllers;
 
 use Osmium\Modules\Admin\Core\AdminController;
-use Osmium\Services\GoogleMaps\Models\GoogleMapsConfig;
+use Osmium\Services\GoogleMapsEmbed\Models\GoogleMapsEmbedConfig;
 
 /**
- * Google Maps settings controller - a full-page form POST/redirect flow,
+ * Google Maps Embed settings controller - a full-page form POST/redirect flow,
  * matching the Meta Pixel service.
  *
  * Routes:
- *   - index() → /admin/settings/google-maps/  (GET shows the form, POST saves it)
+ *   - index() → /admin/settings/google-maps-embed/  (GET shows the form, POST saves it)
  */
-class GoogleMapsController extends AdminController
+class GoogleMapsEmbedController extends AdminController
 {
-    private const CONFIG_FILE_PATH = 'app/config/services/google-maps.json.php';
+    private const CONFIG_FILE_PATH = 'app/config/services/google-maps-embed.json.php';
     private const DEFAULT_CONFIG = <<<'JSON'
         <?php exit(); ?>
         {
-            "googleMaps": {
+            "googleMapsEmbed": {
                 "embedUrl": ""
             }
         }
@@ -31,42 +31,42 @@ class GoogleMapsController extends AdminController
         $isPost = $this->isPost();
         if ($isPost) $this->handleSubmit();
 
-        $this->data['admin']['config']['googleMaps'] = (array) GoogleMapsConfig::get();
-        $this->data['admin']['settingsSaved'] = $_SESSION['google_maps_settings_saved'] ?? false;
-        $this->data['admin']['settingsError'] = $_SESSION['google_maps_settings_error'] ?? false;
-        unset($_SESSION['google_maps_settings_saved'], $_SESSION['google_maps_settings_error']);
+        $this->data['admin']['config']['googleMapsEmbed'] = (array) GoogleMapsEmbedConfig::get();
+        $this->data['admin']['settingsSaved'] = $_SESSION['google_maps_embed_settings_saved'] ?? false;
+        $this->data['admin']['settingsError'] = $_SESSION['google_maps_embed_settings_error'] ?? false;
+        unset($_SESSION['google_maps_embed_settings_saved'], $_SESSION['google_maps_embed_settings_error']);
 
-        $this->setView('google-maps/index.phtml');
+        $this->setView('google-maps-embed/index.phtml');
     }
 
     private function handleSubmit(): void
     {
         $csrfValid = $this->admin->auth->validateCsrf();
         if (!$csrfValid) {
-            $_SESSION['google_maps_settings_error'] = 'Invalid form submission. Please try again.';
-            $this->redirect('settings/google-maps/');
+            $_SESSION['google_maps_embed_settings_error'] = 'Invalid form submission. Please try again.';
+            $this->redirect('settings/google-maps-embed/');
         }
 
         $embedUrl = \trim($_POST['embed_url'] ?? '');
 
-        $urlValid = GoogleMapsConfig::isValidEmbedUrl($embedUrl);
+        $urlValid = GoogleMapsEmbedConfig::isValidEmbedUrl($embedUrl);
         $urlGiven = $embedUrl !== '';
         if ($urlGiven && !$urlValid) {
-            $_SESSION['google_maps_settings_error'] = 'The URL must start with https://www.google.com/maps/embed - copy only the src value from the Google Maps embed code.';
-            $this->redirect('settings/google-maps/');
+            $_SESSION['google_maps_embed_settings_error'] = 'The URL must start with https://www.google.com/maps/embed - copy only the src value from the Google Maps embed code.';
+            $this->redirect('settings/google-maps-embed/');
         }
 
         $this->saveConfig($embedUrl);
 
         $this->admin->model->changelog->log(
-            description: 'Updated Google Maps settings',
+            description: 'Updated Google Maps Embed settings',
             recordType: 'settings',
         );
 
-        GoogleMapsConfig::clearCache();
+        GoogleMapsEmbedConfig::clearCache();
 
-        $_SESSION['google_maps_settings_saved'] = true;
-        $this->redirect('settings/google-maps/');
+        $_SESSION['google_maps_embed_settings_saved'] = true;
+        $this->redirect('settings/google-maps-embed/');
     }
 
     private function saveConfig(string $embedUrl): void
@@ -80,7 +80,7 @@ class GoogleMapsController extends AdminController
         $phpHeader = \substr(string: $content, offset: 0, length: $jsonStart);
         $data = \json_decode(\substr(string: $content, offset: $jsonStart), associative: true) ?? [];
 
-        $data['googleMaps'] = ['embedUrl' => $embedUrl];
+        $data['googleMapsEmbed'] = ['embedUrl' => $embedUrl];
 
         $newJson = \json_encode(
             value: $data,

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Osmium\Services\GoogleMaps\Models;
+namespace Osmium\Services\GoogleMapsEmbed\Models;
 
 /**
- * Google Maps configuration helper.
+ * Google Maps Embed configuration helper.
  *
  * Loads this service's own settings file, matching the file-based config
  * convention used by the other services (app/config/services/{id}.json.php).
  */
-class GoogleMapsConfig
+class GoogleMapsEmbedConfig
 {
     private static ?object $config = null;
-    private static string $configPath = 'app/config/services/google-maps.json.php';
+    private static string $configPath = 'app/config/services/google-maps-embed.json.php';
 
     /**
      * Falls back to defaults (no embed URL) if the config file is missing, so
@@ -44,7 +44,7 @@ class GoogleMapsConfig
         $json = \substr(string: $content, offset: $jsonStart);
         $decoded = \json_decode($json);
 
-        self::$config = $decoded->googleMaps ?? self::defaults();
+        self::$config = $decoded->googleMapsEmbed ?? self::defaults();
 
         return self::$config;
     }

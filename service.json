@@ -1,8 +1,8 @@
 {
-    "id": "google-maps",
-    "name": "Google Maps",
-    "version": "1.0.1",
-    "description": "Google Maps embed for a theme to place anywhere (e.g. a contact page), from one admin-editable embed URL",
+    "id": "google-maps-embed",
+    "name": "Google Maps Embed",
+    "version": "1.1.0",
+    "description": "Google Maps Embed (a single place in an iframe) for a theme to place anywhere (e.g. a contact page), from one admin-editable embed URL",
     "category": "content",
     "author": {
         "name": "Gavin Cox"
@@ -24,21 +24,21 @@
             "section": "Content",
             "items": [
                 {
-                    "id": "google-maps",
-                    "label": "Google Maps",
+                    "id": "google-maps-embed",
+                    "label": "Google Maps Embed",
                     "icon": "bx bx-map",
-                    "route": "admin/settings/google-maps",
-                    "activePattern": "admin/settings/google-maps",
+                    "route": "admin/settings/google-maps-embed",
+                    "activePattern": "admin/settings/google-maps-embed",
                     "role": null
                 }
             ]
         },
         "routes": {
-            "admin/settings/google-maps": {
-                "controller": "controllers/GoogleMapsController.php",
-                "class": "Osmium\\Services\\GoogleMaps\\Controllers\\GoogleMapsController",
+            "admin/settings/google-maps-embed": {
+                "controller": "controllers/GoogleMapsEmbedController.php",
+                "class": "Osmium\\Services\\GoogleMapsEmbed\\Controllers\\GoogleMapsEmbedController",
                 "method": "index",
-                "title": "Google Maps"
+                "title": "Google Maps Embed"
             }
         }
     },
@@ -53,6 +53,6 @@
     },
 
     "setup": {
-        "postInstallNote": "Paste the embed URL on the Google Maps settings page (Google Maps > Share > Embed a map; copy only the src URL, not the whole iframe). Then place the map in a theme with <?php $template['serviceBlock']('map'); ?> where it should appear, e.g. the contact page. Nothing renders until a URL is saved. The iframe loads Google immediately, with no consent step."
+        "postInstallNote": "Paste the embed URL on the Google Maps Embed settings page (Google Maps > Share > Embed a map; copy only the src URL, not the whole iframe). Then place the map in a theme with <?php $template['serviceBlock']('map'); ?> where it should appear, e.g. the contact page. Nothing renders until a URL is saved. The iframe loads Google immediately, with no consent step."
     }
 }
