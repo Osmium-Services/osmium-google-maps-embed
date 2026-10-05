@@ -1,0 +1,26 @@
+<?php // Rendered in place by a theme calling $template['serviceBlock']('map')
+// (the in-place counterpart to ServiceThemeBlocks::render('head', ...)).
+// Expects $site and $googleMaps (this service's config, injected by the
+// loader). Renders nothing until a valid Google embed URL is saved.
+//
+// $googleMaps is read from the injected context rather than via
+// GoogleMapsConfig::get(), so a class that can't be autoloaded can't fatal
+// the page. The URL check mirrors GoogleMapsConfig::isValidEmbedUrl(). ?>
+<?php
+$embedUrl = (string) ($googleMaps['embedUrl'] ?? '');
+$urlValid = \preg_match(pattern: '#^https://www\.google\.com/maps/embed[/?]#', subject: $embedUrl) === 1;
+$siteName = (string) ($site['name'] ?? '');
+?>
+<?php if ($urlValid): ?>
+<div id="google_map">
+    <div class="map_container">
+        <div id="map">
+            <iframe style="width:100%;height:95%;border:0;"
+            title="Map showing the location of <?= \htmlspecialchars($siteName) ?>"
+            src="<?= \htmlspecialchars($embedUrl) ?>"
+            width="600" height="450"
+            allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

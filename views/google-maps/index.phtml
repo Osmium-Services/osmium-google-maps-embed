@@ -1,0 +1,47 @@
+<div class="d-flex justify-content-between align-items-center py-3 mb-4">
+    <h4 class="mb-0">
+        <span class="text-muted fw-light">Services /</span> Google Maps
+    </h4>
+    <button type="submit" form="settings-form" class="btn btn-primary">
+        <i class="bx bx-save me-1"></i> Save Settings
+    </button>
+</div>
+
+<?php if ($admin['settingsSaved']): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Settings saved successfully!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
+<?php if ($admin['settingsError'] ?? false): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <?= \htmlspecialchars($admin['settingsError'] ?? '') ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+
+<form method="POST" action="<?= $admin['basePath'] ?>settings/google-maps/" id="settings-form">
+    <input type="hidden" name="token" value="<?= $template['formToken'] ?? '' ?>">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bx bx-map me-2"></i>Google Maps</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="embed_url" class="form-label fw-semibold">Embed URL</label>
+                        <input type="text" class="form-control" id="embed_url" name="embed_url"
+                            value="<?= \htmlspecialchars($admin['config']['googleMaps']['embedUrl'] ?? '') ?>">
+                        <div class="form-text">In Google Maps choose Share, then Embed a map, and copy only the <code>src</code> value (it starts with https://www.google.com/maps/embed). Leave blank to show no map.</div>
+                    </div>
+                    <div class="mb-0 text-muted small">
+                        The map loads Google's iframe as soon as the page does, with no consent step. A theme places it with
+                        <code>&lt;?php $template['serviceBlock']('map'); ?&gt;</code>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
