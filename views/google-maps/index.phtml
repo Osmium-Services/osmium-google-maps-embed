@@ -30,15 +30,11 @@
                     <h5 class="mb-0"><i class="bx bx-map me-2"></i>Google Maps</h5>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3">
+                    <div class="mb-0">
                         <label for="embed_url" class="form-label fw-semibold">Embed URL</label>
                         <input type="text" class="form-control" id="embed_url" name="embed_url"
                             value="<?= \htmlspecialchars($admin['config']['googleMaps']['embedUrl'] ?? '') ?>">
                         <div class="form-text">In Google Maps choose Share, then Embed a map, and copy only the <code>src</code> value (it starts with https://www.google.com/maps/embed). Leave blank to show no map.</div>
-                    </div>
-                    <div class="mb-0 text-muted small">
-                        The map loads Google's iframe as soon as the page does, with no consent step. A theme places it with
-                        <code>&lt;?php $template['serviceBlock']('map'); ?&gt;</code>.
                     </div>
                 </div>
             </div>

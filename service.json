@@ -1,7 +1,7 @@
 {
     "id": "google-maps",
     "name": "Google Maps",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Google Maps embed for a theme to place anywhere (e.g. a contact page), from one admin-editable embed URL",
     "category": "content",
     "author": {
