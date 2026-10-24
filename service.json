@@ -1,7 +1,7 @@
 {
     "id": "google-maps-embed",
     "name": "Google Maps Embed",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "Google Maps Embed (a single place in an iframe): named maps managed in admin, for a theme to show anywhere, found by slug",
     "category": "content",
     "author": {
