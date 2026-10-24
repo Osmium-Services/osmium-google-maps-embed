@@ -1,7 +1,7 @@
 {
     "id": "google-maps-embed",
     "name": "Google Maps Embed",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Google Maps Embed (a single place in an iframe) for a theme to place anywhere (e.g. a contact page), from one admin-editable embed URL",
     "category": "content",
     "author": {
