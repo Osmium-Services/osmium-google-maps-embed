@@ -1,0 +1,72 @@
+<?php $map = $admin['map']; ?>
+<div class="d-flex justify-content-between align-items-center py-3 mb-4">
+    <h4 class="mb-0">
+        <span class="text-muted fw-light"><a href="<?= $adminUrl('google-maps-embed/') ?>">Google Maps Embed</a> /</span> <?= $map['id'] ? 'Edit Map' : 'New Map' ?>
+    </h4>
+    <a href="<?= $adminUrl('google-maps-embed/') ?>" class="btn btn-label-secondary">
+        <i class="bx bx-arrow-back me-1"></i> All maps
+    </a>
+</div>
+
+<?php if ($admin['showSavedMessage']): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bx bx-check-circle me-1"></i>
+        Map saved successfully.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<?php endif; ?>
+
+<div id="mapResult" class="alert d-none"></div>
+
+<form id="mapForm" autocomplete="off">
+    <input type="hidden" id="mapId" value="<?= (int) $map['id'] ?>">
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="mapName" class="form-label fw-semibold">Map name</label>
+                        <input type="text" class="form-control" id="mapName" maxlength="150" required
+                            value="<?= \htmlspecialchars($map['name']) ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="mapSlug" class="form-label fw-semibold">Slug</label>
+                        <input type="text" class="form-control" id="mapSlug" maxlength="100"
+                            value="<?= \htmlspecialchars($map['slug']) ?>">
+                        <div class="form-text">Lowercase letters, numbers and hyphens. A theme finds the map by this.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mapUrl" class="form-label fw-semibold">Embed URL</label>
+                        <input type="text" class="form-control" id="mapUrl" maxlength="2000" required
+                            value="<?= \htmlspecialchars($map['embedUrl']) ?>">
+                        <div class="form-text">In Google Maps choose Share, then Embed a map, and copy only the <code>src</code> value (it starts with https://www.google.com/maps/embed).</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="mapSaveButton">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <?php if ($map['id']): ?>
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-header"><h6 class="mb-0">Use it on the site</h6></div>
+                    <div class="card-body">
+                        <p class="small text-muted">In a theme controller:</p>
+                        <pre class="small mb-3"><code>$maps = new \Osmium\Services\GoogleMapsEmbed\Models\GoogleMapsEmbeds($this->osmium->dataSource);
+$map = $maps->get('<?= \htmlspecialchars($map['slug']) ?>');</code></pre>
+                        <p class="small text-muted mb-0"><code>$map</code> is null when there is nothing to show, otherwise it has <code>name</code> and <code>url</code> (the iframe <code>src</code>, print it escaped).</p>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</form>
+
+<script nonce="<?= $cspNonce ?? '' ?>">
+    window.MapConfig = {
+        actionUrl: <?= \json_encode($adminUrl('google-maps-embed/action/')) ?>,
+        editUrl: <?= \json_encode($adminUrl('google-maps-embed/edit/')) ?>
+    };
+</script>
+<script src="/assets/services/google-maps-embed/google-maps-embed-edit.js<?= $adminAssetVersion('/assets/services/google-maps-embed/google-maps-embed-edit.js') ?>"></script>
