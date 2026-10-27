@@ -1,10 +1,11 @@
 {
     "id": "google-maps-embed",
     "name": "Google Maps Embed",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "Google Maps Embed (a single place in an iframe): named maps managed in admin, for a theme to show anywhere, found by slug",
     "category": "content",
     "website": "https://developers.google.com/maps/documentation/embed",
+    "account": {"required": "free", "note": "Needs a Google Cloud API key with billing enabled."},
     "author": {
         "name": "Gavin Cox"
     },
