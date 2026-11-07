@@ -36,6 +36,7 @@ return [
         'endpoint' => 'google-maps-embed/action/',
         'emptyText' => 'No maps yet. Use New Map to add the first.',
         'order' => null, // keep the server's name order until a header is clicked
+        'grid' => require __DIR__ . '/../grids/google-maps-embeds.php',
         'columns' => [
             $nameColumn,
             ['key' => 'date_label', 'label' => 'Updated', 'type' => 'text', 'nowrap' => true, 'sortKey' => 'date_sort'],
