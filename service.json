@@ -46,6 +46,12 @@
                 "method": "index",
                 "title": "Google Maps Embed"
             },
+            "admin/google-maps-embed/add": {
+                "controller": "controllers/GoogleMapsEmbedController.php",
+                "class": "Osmium\\Services\\GoogleMapsEmbed\\Controllers\\GoogleMapsEmbedController",
+                "method": "add",
+                "title": "New Map"
+            },
             "admin/google-maps-embed/edit": {
                 "controller": "controllers/GoogleMapsEmbedController.php",
                 "class": "Osmium\\Services\\GoogleMapsEmbed\\Controllers\\GoogleMapsEmbedController",

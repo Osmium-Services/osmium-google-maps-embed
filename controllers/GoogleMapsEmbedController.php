@@ -13,7 +13,8 @@ use Osmium\Services\GoogleMapsEmbed\Models\GoogleMapsEmbedText;
  *
  * Routes:
  *   - index()  → /admin/google-maps-embed/
- *   - edit()   → /admin/google-maps-embed/edit/?id=N   (no id: a new map)
+ *   - add()    → /admin/google-maps-embed/add/
+ *   - edit()   → /admin/google-maps-embed/edit/?id=N
  *   - action() → /admin/google-maps-embed/action/      (save, delete, restore, permanently_delete)
  */
 class GoogleMapsEmbedController extends AdminController
@@ -33,14 +34,27 @@ class GoogleMapsEmbedController extends AdminController
         $this->setView('google-maps-embed/index.phtml');
     }
 
+    public function add(): void
+    {
+        $this->osmium->clearStashedQuerystring();
+        $this->prepareFormData(id: 0, map: null);
+        $this->setView('google-maps-embed/add.phtml');
+    }
+
     public function edit(): void
     {
         $id = (int) $this->osmium->getStashedParam(key: 'id', default: 0); // Core moves query params out of $_GET
-        $this->osmium->clearStashedQuerystring(); // Or a later "New Map" would reuse this id
+        $this->osmium->clearStashedQuerystring();
         $map = $id ? (new GoogleMapsEmbed($this->osmium->dataSource))->getById($id) : null;
-        $isMissing = $id && (!$map || $map['deleted_at'] !== null);
+        $isMissing = !$map || $map['deleted_at'] !== null;
         if ($isMissing) $this->redirect('google-maps-embed/');
 
+        $this->prepareFormData(id: $id, map: $map);
+        $this->setView('google-maps-embed/edit.phtml');
+    }
+
+    private function prepareFormData(int $id, ?array $map): void
+    {
         $this->data['admin']['map'] = [
             'id' => $id,
             'name' => $map['name'] ?? '',
@@ -48,8 +62,6 @@ class GoogleMapsEmbedController extends AdminController
             'embedUrl' => $map['embed_url'] ?? '',
         ];
         $this->data['admin']['showSavedMessage'] = $this->consumeSavedFlag();
-
-        $this->setView('google-maps-embed/edit.phtml');
     }
 
     private function consumeSavedFlag(): bool

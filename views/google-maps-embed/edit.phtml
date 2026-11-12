@@ -1,7 +1,7 @@
 <?php $map = $admin['map']; ?>
 <div class="d-flex justify-content-between align-items-center py-3 mb-4">
     <h4 class="mb-0">
-        <span class="text-muted fw-light"><a href="<?= $adminUrl('google-maps-embed/') ?>">Google Maps Embed</a> /</span> <?= $map['id'] ? 'Edit Map' : 'New Map' ?>
+        <span class="text-muted fw-light"><a href="<?= $adminUrl('google-maps-embed/') ?>">Google Maps Embed</a> /</span> Edit Map
     </h4>
     <a href="<?= $adminUrl('google-maps-embed/') ?>" class="btn btn-label-secondary">
         <i class="bx bx-arrow-back me-1"></i> All maps
@@ -46,30 +46,26 @@
                 </div>
             </div>
 
-            <?php if ($map['id'] && $map['embedUrl'] !== ''): ?>
-                <div class="card mb-4">
-                    <div class="card-header"><h6 class="mb-0">Preview</h6></div>
-                    <div class="card-body">
-                        <iframe title="Preview of <?= \htmlspecialchars($map['name']) ?>" src="<?= \htmlspecialchars($map['embedUrl']) ?>"
-                            style="width:100%;height:350px;border:0;" allowfullscreen></iframe>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
-
-        <?php if ($map['id']): ?>
-            <div class="col-lg-4">
-                <div class="card mb-4">
-                    <div class="card-header"><h6 class="mb-0">Use it on the site</h6></div>
-                    <div class="card-body">
-                        <p class="small text-muted">In a theme controller:</p>
-                        <pre class="small mb-3"><code>$maps = new \Osmium\Services\GoogleMapsEmbed\Models\GoogleMapsEmbeds($this->osmium->dataSource);
-$map = $maps->get('<?= \htmlspecialchars($map['slug']) ?>');</code></pre>
-                        <p class="small text-muted mb-0"><code>$map</code> is null when there is nothing to show, otherwise it has <code>name</code> and <code>url</code> (the iframe <code>src</code>, print it escaped).</p>
-                    </div>
+            <div class="card mb-4">
+                <div class="card-header"><h6 class="mb-0">Preview</h6></div>
+                <div class="card-body">
+                    <iframe title="Preview of <?= \htmlspecialchars($map['name']) ?>" src="<?= \htmlspecialchars($map['embedUrl']) ?>"
+                        style="width:100%;height:350px;border:0;" allowfullscreen></iframe>
                 </div>
             </div>
-        <?php endif; ?>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card mb-4">
+                <div class="card-header"><h6 class="mb-0">Use it on the site</h6></div>
+                <div class="card-body">
+                    <p class="small text-muted">In a theme controller:</p>
+                    <pre class="small mb-3"><code>$maps = new \Osmium\Services\GoogleMapsEmbed\Models\GoogleMapsEmbeds($this->osmium->dataSource);
+$map = $maps->get('<?= \htmlspecialchars($map['slug']) ?>');</code></pre>
+                    <p class="small text-muted mb-0"><code>$map</code> is null when there is nothing to show, otherwise it has <code>name</code> and <code>url</code> (the iframe <code>src</code>, print it escaped).</p>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 
