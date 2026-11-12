@@ -1,7 +1,7 @@
 {
     "id": "google-maps-embed",
     "name": "Google Maps Embed",
-    "version": "2.1.7",
+    "version": "2.2.0",
     "description": "Google Maps Embed (a single place in an iframe): named maps managed in admin, for a theme to show anywhere, found by slug",
     "category": "content",
     "website": "https://developers.google.com/maps/documentation/embed",
@@ -34,7 +34,9 @@
                     "route": "admin/google-maps-embed",
                     "activePattern": "admin/google-maps-embed*",
                     "color": "#4285f4",
-                    "placement": "top",
+                    "placement": "group",
+                    "group": "content",
+                    "order": 40,
                     "role": null
                 }
             ]
