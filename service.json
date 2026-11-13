@@ -18,6 +18,15 @@
     "autoload": [
         "models"
     ],
+
+    "hooks": {
+        "adminbar.context": [
+            "Osmium\\Services\\GoogleMapsEmbed\\Models\\MapsAdminBar::context"
+        ],
+        "adminbar.links": [
+            "Osmium\\Services\\GoogleMapsEmbed\\Models\\MapsAdminBar::links"
+        ]
+    },
     "csp": {
         "frame-src": [
             "https://www.google.com"

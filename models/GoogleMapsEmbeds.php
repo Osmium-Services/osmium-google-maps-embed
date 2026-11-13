@@ -17,6 +17,9 @@ use Osmium\Core\Library\OsmiumPDO;
  */
 class GoogleMapsEmbeds
 {
+    /** @var int|null id of the first map this request handed out, for the staff bar's "Edit map" link */
+    private static ?int $firstShownMapId = null;
+
     public function __construct(private OsmiumPDO $database)
     {
     }
@@ -33,6 +36,20 @@ class GoogleMapsEmbeds
         $urlInvalid = !GoogleMapsEmbedText::isValidEmbedUrl($url);
         if ($urlInvalid) return null;
 
+        self::$firstShownMapId ??= (int) $map['id'];
+
         return ['name' => (string) $map['name'], 'url' => $url];
+    }
+
+    /** The map this request handed out first (to any theme or service calling get()), or null when none was. */
+    public static function firstShownMapId(): ?int
+    {
+        return self::$firstShownMapId;
+    }
+
+    /** For tests: forget what was handed out. */
+    public static function forgetShown(): void
+    {
+        self::$firstShownMapId = null;
     }
 }
