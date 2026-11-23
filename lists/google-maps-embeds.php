@@ -34,6 +34,7 @@ return [
         'title' => 'Maps',
         'noun' => ['map', 'maps'],
         'endpoint' => 'google-maps-embed/action/',
+        'presence' => 'google_maps_embed',
         'emptyText' => 'No maps yet. Use New Map to add the first.',
         'order' => null, // keep the server's name order until a header is clicked
         'grid' => require __DIR__ . '/../grids/google-maps-embeds.php',

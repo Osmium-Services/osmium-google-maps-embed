@@ -28,6 +28,19 @@
         slugInput.value = nameInput.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     });
 
+    // The admin's unsaved-changes warning reads window.hasUnsavedChanges. Its form tracker compares named fields and
+    // this form has none, so compare what Save would send against what the page loaded with.
+    function formValues() {
+        return JSON.stringify({ name: nameInput.value, slug: slugInput.value, embed_url: urlInput.value });
+    }
+
+    const loadedValues = formValues();
+    function trackChanges() {
+        window.hasUnsavedChanges = formValues() !== loadedValues;
+    }
+    form.addEventListener('input', trackChanges);
+    form.addEventListener('change', trackChanges);
+
     form.addEventListener('submit', async function (event) {
         event.preventDefault();
         saveButton.disabled = true;
@@ -54,6 +67,7 @@
             }
 
             // Go to the map by id rather than reloading: core strips the query string from this page's address
+            window.hasUnsavedChanges = false;
             window.location.href = config.editUrl + '?id=' + data.id;
         } catch (error) {
             console.error('Save error:', error);

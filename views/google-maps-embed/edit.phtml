@@ -75,4 +75,7 @@ $map = $maps->get('<?= \htmlspecialchars($map['slug']) ?>');</code></pre>
         editUrl: <?= \json_encode($adminUrl('google-maps-embed/edit/')) ?>
     };
 </script>
+<script nonce="<?= $cspNonce ?? '' ?>">
+    initPresenceTracking(adminBasePath + 'google-maps-embed/action/', <?= (int) $map['id'] ?>, { formSelector: '#mapForm' });
+</script>
 <script src="/assets/services/google-maps-embed/google-maps-embed-edit.js<?= $adminAssetVersion('/assets/services/google-maps-embed/google-maps-embed-edit.js') ?>"></script>

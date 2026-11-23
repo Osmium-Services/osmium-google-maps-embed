@@ -30,6 +30,7 @@ class GoogleMapsEmbedController extends AdminController
         $this->data['admin']['recentMaps'] = \array_map($this->formatRecentMap(...), $maps->listRecent());
         $this->data['admin']['deletedMaps'] = \array_map($this->formatMap(...), $maps->listDeleted());
         $this->data['admin']['lists'] = require __DIR__ . '/../lists/google-maps-embeds.php';
+        $this->data['admin']['activeEditors'] = $this->activeEditors(self::RECORD_TYPE);
 
         $this->setView('google-maps-embed/index.phtml');
     }
@@ -49,6 +50,7 @@ class GoogleMapsEmbedController extends AdminController
         $isMissing = !$map || $map['deleted_at'] !== null;
         if ($isMissing) $this->redirect('google-maps-embed/');
 
+        $this->openRecord(recordType: self::RECORD_TYPE, recordId: $id);
         $this->prepareFormData(id: $id, map: $map);
         $this->setView('google-maps-embed/edit.phtml');
     }
@@ -80,10 +82,13 @@ class GoogleMapsEmbedController extends AdminController
         if (!$isPost) $this->admin->jsonError('Method not allowed');
 
         $input = $this->admin->auth->getJsonInput();
+        $action = $input['action'] ?? '';
+
+        $this->handlePresence(action: $action, input: $input, recordType: self::RECORD_TYPE);
+
         $csrfValid = $this->admin->auth->validateCsrfJson($input);
         if (!$csrfValid) $this->admin->jsonError('Invalid request token. Please refresh and try again.');
 
-        $action = $input['action'] ?? '';
         $id = (int) ($input['id'] ?? 0);
 
         try {
