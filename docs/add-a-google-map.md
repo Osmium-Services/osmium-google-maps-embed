@@ -1,6 +1,7 @@
 ---
 title: Add a Google map
 tags: map, google maps, embed, iframe, location, directions
+page: admin/google-maps-embed, admin/google-maps-embed/add, admin/google-maps-embed/edit*
 ---
 
 **Google Maps Embed** shows a single place on a map. You create a named map here, and your site's design shows it wherever it is needed.
